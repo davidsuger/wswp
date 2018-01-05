@@ -14,7 +14,7 @@ def download(url, user_agent='wswp', num_retries=2, charset='utf-8'):
             cs = charset
         html = resp.read().decode(cs)
     except (URLError, HTTPError, ContentTooShortError) as e:
-        print('Download error:', e.reason)
+        print('Code: {} Download error:{}'.format(e.code, e.reason))
         html = None
         if num_retries > 0:
             if hasattr(e, 'code') and 500 <= e.code < 600:
@@ -28,6 +28,7 @@ def crawl_site(url, max_errors=5):
     for page in itertools.count(1):
         pg_url = '{}{}'.format(url, page)
         html = download(pg_url)
+        # print(html)
         if html is None:
             num_errors += 1
             if num_errors == max_errors:
@@ -36,3 +37,7 @@ def crawl_site(url, max_errors=5):
         else:
             num_errors = 0
             # success - can scrape the result
+
+
+if __name__ == '__main__':
+    crawl_site('http://example.webscraping.com/view/-')

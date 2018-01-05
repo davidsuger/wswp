@@ -49,3 +49,6 @@ def get_links(html):
     webpage_regex = re.compile("""<a[^>]+href=["'](.*?)["']""", re.IGNORECASE)
     # list of all links from the webpage
     return webpage_regex.findall(html)
+
+if __name__ == '__main__':
+    link_crawler('http://example.webscraping.com', '/(index|view)/')
